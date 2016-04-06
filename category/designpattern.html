@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
         <meta charset="utf-8" />
-        <title>fjord - Lfj</title>
+        <title>fjord - DesignPattern</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -14,7 +14,7 @@
         <header id="banner" class="body">
                 <h1><a href="/">fjord </a></h1>
                 <nav><ul>
-                    <li><a href="/category/designpattern.html">DesignPattern</a></li>
+                    <li class="active"><a href="/category/designpattern.html">DesignPattern</a></li>
                     <li><a href="/category/qi-ta.html">其他</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
@@ -55,37 +55,6 @@ SIGNAL和SLOT都是宏，将a,b转字符串处理，connect函数通过查找元
 signal()实际上就是调用signal()函数。通知者调用signal函数就相当于前面的Subject.Notify()。signal()先查询map里面对应的receiver+slt_idx信息，然后receiver通过slt_idx调用自己对应的槽函数。这里receiver如何根据一个index值调用槽函数呢？也是通过receiver的元对象，元对象中会有一个函数switch(index)，case就是对应的槽函数。</p>
 <p>大致的思路是这样，具体的实现过程这里就不提了，都是从<a href="http://blog.csdn.net/dbzhang800/article/details/6376422">dbzhang800</a>这里学到的。</p>                </article>
             </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/all-set.html" rel="bookmark"
-                           title="Permalink to All set!">All set!</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-03-30T00:00:00+08:00">
-                Published: 周三 30 三月 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/lfj.html">Lfj</a>
-        </address>
-<p>In <a href="/category/qi-ta.html">其他</a>.</p>
-
-</footer><!-- /.post-info -->                <p>来了来了。</p>
-<p>之前习惯使用Evernote和Wiznote，结果Github的静态blog搭好了好久一直没使用，是时候从笔记里淘出点内容复习一下了。
-这里以后上传的大概都会是我自己的总结，学习的内容也尽量用自己的语言组织，然后列出参考文章。
-吐槽下，我觉得用博客进行转载实在是很无聊的行为，浪费存储空间以及搜索资源。</p>
-                <a class="readmore" href="/all-set.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

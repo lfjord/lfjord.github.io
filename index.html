@@ -14,13 +14,59 @@
         <header id="banner" class="body">
                 <h1><a href="/">fjord </a></h1>
                 <nav><ul>
+                    <li><a href="/category/designpattern.html">DesignPattern</a></li>
                     <li><a href="/category/qi-ta.html">其他</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/all-set.html">All set!</a></h1>
+                    <h1 class="entry-title"><a href="/guan-cha-zhe-mo-shi-yu-qtde-xin-hao-cao-ji-zhi.html">观察者模式与QT的信号槽机制</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-04-06T00:00:00+08:00">
+                Published: 周三 06 四月 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/lfj.html">Lfj</a>
+        </address>
+<p>In <a href="/category/designpattern.html">DesignPattern</a>.</p>
+
+</footer><!-- /.post-info --><p>早上电话面试，被问到关于观察者模式，整理一下思路。</p>
+<h2>观察者模式</h2>
+<p>定义一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个对象在状态发生变化时会通知所有观察者对象。</p>
+<p>简单地描述就是两个抽象类：
+class Subject
+private List<Observer>
++ Attach
++ Detach
++ Notify</p>
+<p>class Observer
++ Update()</p>
+<p>缺陷就是，Notify只能调用Observer.Update()，假如我希望Observer同时观察另一个对象，执行另一个动作，也就是同时实现Observer的一对多，将整个模式变为多对多。这时就很麻烦了，因为对于Subject而言，只知道Observer的Update()这个接口。
+当然也不是不能解决，比如Subject直接添加Observer的子类，但是这样就失去了抽象出这两个类的意义，将两个类耦合在一起了。</p>
+<p>我其实被QT的信号槽机制误导了，面试官问起观察者模式时，我一直在考虑多对多怎么实现，所以回答是需要三个类，一个观察者，一个通知者，以及一个中间类。但是中间类怎么维护通知者和观察者的多对多关系，就没理清思路。</p>
+<p>实际上当时的想法不能说全错了，因为QT的信号槽差不多就是这么实现的，不过准确的来说并没有第三个类，而是通过元对象实现。
+在这里回顾下信号槽的知识，自顶向下，先从信号槽的使用，connect函数讲起。
+    connect(sender, SIGNAL(a), receiver, SLOT(b));
+这里sender是通知者，receiver是观察者，而中间类其实就是Qt的元对象，sender和receiver中都包含了自己的元对象，其中保存了自己的signal函数和slot函数的字符串表。
+SIGNAL和SLOT都是宏，将a,b转字符串处理，connect函数通过查找元对象中的字符串表，获得对应的sig_idx和slt_idx，然后保存在一个map中。</p>
+<p>emit 是一个空的宏，所以emit
+signal()实际上就是调用signal()函数。通知者调用signal函数就相当于前面的Subject.Notify()。signal()先查询map里面对应的receiver+slt_idx信息，然后receiver通过slt_idx调用自己对应的槽函数。这里receiver如何根据一个index值调用槽函数呢？也是通过receiver的元对象，元对象中会有一个函数switch(index)，case就是对应的槽函数。</p>
+<p>大致的思路是这样，具体的实现过程这里就不提了，都是从<a href="http://blog.csdn.net/dbzhang800/article/details/6376422">dbzhang800</a>这里学到的。</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/all-set.html" rel="bookmark"
+                           title="Permalink to All set!">All set!</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-03-30T00:00:00+08:00">
                 Published: 周三 30 三月 2016
@@ -31,8 +77,15 @@
         </address>
 <p>In <a href="/category/qi-ta.html">其他</a>.</p>
 
-</footer><!-- /.post-info --><p>来了来了。</p>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>来了来了。</p>
+<p>之前习惯使用Evernote和Wiznote，结果Github的静态blog搭好了好久一直没使用，是时候从笔记里淘出点内容复习一下了。
+这里以后上传的大概都会是我自己的总结，学习的内容也尽量用自己的语言组织，然后列出参考文章。
+吐槽下，我觉得用博客进行转载实在是很无聊的行为，浪费存储空间以及搜索资源。</p>
+                <a class="readmore" href="/all-set.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>
